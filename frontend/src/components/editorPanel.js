@@ -1,7 +1,140 @@
+import { useState } from "react";
+import { VscTerminal, VscDebugRestart, VscSettings, VscRobot, VscRunAll } from "react-icons/vsc";
+import Editor from "@monaco-editor/react";
+import { Switch } from "@headlessui/react";
+import ChatbotComponent from "./chatbot"; 
+
 export default function EditorPanel() {
-    return (
-        <div className="h-full bg-[#48434B]  overflow-auto p-2">
-            <p className="font-bold">Top Right Panel</p>
+  const [language, setLanguage] = useState("python");
+  const [editorValue, setEditorValue] = useState("");
+  const [isAiEnabled, setIsAiEnabled] = useState(false);
+  const [theme, setTheme] = useState("vs-dark");
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false); 
+  const [isChatOpen, setIsChatOpen] = useState(false); 
+
+  // Handle editor content change
+  const handleEditorChange = (value) => {
+    setEditorValue(value);
+  };
+
+  // Handle theme change from the dropdown
+  const handleThemeChange = (newTheme) => {
+    setTheme(newTheme);
+    setIsSettingsOpen(false); // Close the settings dropdown after selecting a theme
+  };
+
+  // Handle refresh (clear editor)
+  const handleRefresh = () => {
+    setEditorValue("");
+  };
+
+  // Toggle chatbot visibility
+  const handleToggleChat = () => {
+    setIsChatOpen(!isChatOpen);
+  };
+
+  return (
+    <div className="h-full flex flex-col bg-white rounded-lg border border-gray-300">
+      {/* Navbar */}
+      <div className="p-2 flex justify-between items-center border-b border-gray-200 relative">
+        {/* Left Section with Icons */}
+        <div className="flex items-center space-x-4">
+          <VscTerminal className="text-xl text-gray-700" />
+          <label htmlFor="language" className="text-sm font-medium text-gray-700">
+            Language:
+          </label>
+          <select
+            id="language"
+            value={language}
+            onChange={(e) => setLanguage(e.target.value)}
+            className="border rounded px-2 py-1 text-sm text-gray-700"
+          >
+            <option value="python">Python</option>
+            <option value="java">Java</option>
+            <option value="cpp">C++</option>
+          </select>
+
+          {/* AI Assistant Switch */}
+          <div className="flex items-center space-x-2">
+            <label htmlFor="ai-switch" className="text-sm font-medium text-gray-700">
+              AI Assistant
+            </label>
+            <Switch
+              checked={isAiEnabled}
+              onChange={setIsAiEnabled}
+              className={`${
+                isAiEnabled ? "bg-[#5533FF]" : "bg-gray-300"
+              } relative inline-flex h-6 w-11 items-center rounded-full`}
+            >
+              <span
+                className={`${
+                  isAiEnabled ? "translate-x-6" : "translate-x-1"
+                } inline-block h-4 w-4 transform rounded-full bg-white transition-transform`}
+              />
+            </Switch>
+          </div>
         </div>
-    )
+
+        {/* Right Section with Icons */}
+        <div className="flex items-center space-x-4">
+          {/* Robot Icon with Tooltip */}
+          <VscRobot
+            title="AI-powered assistant to help with your programming problems"
+            className={`text-xl text-gray-700 ${isAiEnabled ? "cursor-pointer" : "cursor-not-allowed"}`}
+            onClick={isAiEnabled ? handleToggleChat : null} // Only allow click when AI is enabled
+          />
+          <VscRunAll
+            title="Run Code"
+            className="text-xl text-gray-700 cursor-pointer"
+          />
+          <VscDebugRestart
+            title="Clear editor"
+            onClick={handleRefresh}
+            className="text-xl text-gray-700 cursor-pointer"
+          />
+          <VscSettings
+            title="Change editor theme"
+            onClick={() => setIsSettingsOpen(!isSettingsOpen)}
+            className="text-xl text-gray-700 cursor-pointer"
+          />
+          {/* Theme Selection Dropdown */}
+          {isSettingsOpen && (
+            <div className="absolute right-0 mt-2 bg-white shadow-lg rounded-lg w-32 border border-gray-200 z-10">
+              <div
+                onClick={() => handleThemeChange("vs-dark")}
+                className="p-2 cursor-pointer hover:bg-gray-100"
+              >
+                Dark
+              </div>
+              <div
+                onClick={() => handleThemeChange("light")}
+                className="p-2 cursor-pointer hover:bg-gray-100"
+              >
+                Light
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Monaco Editor */}
+      <div className="flex-grow">
+        <Editor
+          height="100%"
+          language={language}
+          value={editorValue}
+          onChange={handleEditorChange}
+          theme={theme} // Apply the selected theme
+          options={{
+            fontSize: 14,
+            minimap: { enabled: false },
+            automaticLayout: true,
+          }}
+        />
+      </div>
+
+      {/* Chatbot (conditionally rendered) */}
+      {isChatOpen && <ChatbotComponent />}
+    </div>
+  );
 }
