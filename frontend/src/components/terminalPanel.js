@@ -9,56 +9,55 @@ export default function TerminalPanel() {
         <div className="mt-3 text-gray-400">{">"} Running tests...</div>
         <hr className="my-3 border-t border-gray-600" />
 
-        {/* Test 1 - Pass */}
-        <div className="text-green-400 mb-1">✓ Test 1: Handles basic input correctly</div>
+        {/* Test 1 - Fail */}
+        <div
+          className="text-red-400 mb-1 cursor-help font-inter"
+          data-tooltip-id="tooltip-1"
+        >
+          ✗ Test 1: Method signature issue (line 2)
+        </div>
+        <Tooltip id="tooltip-1" place="right" className="max-w-xs">
+          The method parameter is incorrectly typed, causing compilation failure.
+        </Tooltip>
 
-        {/* Test 2 - Pass */}
-        <div className="text-green-400 mb-1">✓ Test 2: Handles edge case input correctly</div>
+        {/* Test 2 - Fail */}
+        <div
+          className="text-red-400 mb-1 cursor-help font-inter"
+          data-tooltip-id="tooltip-2"
+        >
+          ✗ Test 2: Loop boundary error (line 5)
+        </div>
+        <Tooltip id="tooltip-2" place="right" className="max-w-xs">
+          The loop iterates beyond array bounds, leading to runtime errors.
+        </Tooltip>
 
         {/* Test 3 - Fail */}
         <div
-          className="text-red-400 mb-1 cursor-help"
-          data-tooltip-id="tooltip-1"
+          className="text-red-400 mb-1 cursor-help font-inter"
+          data-tooltip-id="tooltip-3"
         >
-          ✗ Test 3: Returns expected output for an array with multiple duplicate elements
+          ✗ Test 3: Misplaced semicolon in condition (line 8)
         </div>
-        <Tooltip id="tooltip-1" place="right" className="max-w-xs">
-          The function fails to return the correct output when there are multiple duplicate elements in the array. The issue might lie in the way the algorithm is handling duplicates or sorting. 
-          <br />
-          <br />
-          <strong>Explanation:</strong> The function doesn't properly handle cases where the sorting order of duplicates matters, potentially causing incorrect results when removing duplicates.
+        <Tooltip id="tooltip-3" place="right" className="max-w-xs">
+          A semicolon prematurely ends the conditional, causing logic errors.
         </Tooltip>
 
         {/* Test 4 - Fail */}
         <div
-          className="text-red-400 mb-1 cursor-help"
-          data-tooltip-id="tooltip-2"
+          className="text-red-400 mb-1 cursor-help font-inter"
+          data-tooltip-id="tooltip-4"
         >
-          ✗ Test 4: Handles input with negative numbers correctly
+          ✗ Test 4: Incorrect return statement (line 12)
         </div>
-        <Tooltip id="tooltip-2" place="right" className="max-w-xs">
-          The function fails to correctly handle arrays with negative numbers. It might be incorrectly handling the sign of the numbers or not considering them during sorting or comparison.
-          <br />
-          <br />
-          <strong>Explanation:</strong> The algorithm should be able to correctly handle negative numbers as they are part of the input domain, but it seems to ignore them or mishandle their position.
+        <Tooltip id="tooltip-4" place="right" className="max-w-xs">
+          The return value includes an unintended increment affecting results.
         </Tooltip>
 
-        {/* Test 5 - Fail */}
-        <div
-          className="text-red-400 mb-1 cursor-help"
-          data-tooltip-id="tooltip-3"
-        >
-          ✗ Test 5: Returns incorrect result for large input size
-        </div>
-        <Tooltip id="tooltip-3" place="right" className="max-w-xs">
-          The function does not work efficiently for larger input sizes. This might be due to the time complexity of the solution, which doesn't scale well as the input size grows.
-          <br />
-          <br />
-          <strong>Explanation:</strong> The algorithm might have a time complexity of O(n^2) or higher, making it inefficient for large input sizes. An optimized solution with a time complexity of O(n log n) or better is recommended.
-        </Tooltip>
+        {/* Test 5 - Pass */}
+        <div className="text-green-400 mb-1 font-inter">✓ Test 5: Handles zero-profit cases correctly</div>
 
         {/* Test 6 - Pass */}
-        <div className="text-green-400 mb-1">✓ Test 6: Handles empty array correctly</div>
+        <div className="text-green-400 mb-1 font-inter">✓ Test 6: Handles single-element inputs correctly</div>
       </div>
     </TooltipProvider>
   );

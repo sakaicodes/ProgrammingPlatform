@@ -1,5 +1,6 @@
-import { Tab } from "@headlessui/react";
+import React, { useState } from "react";
 import ProblemDescription from "./problemDescription";
+import CommunitySolutions from "./communitySolutions"; // 1. Import the new component
 import RecommendedProblems from "./recommendedProblems";
 
 function classNames(...classes) {
@@ -7,41 +8,38 @@ function classNames(...classes) {
 }
 
 export default function ControlPanel() {
-  return (
-    <div className="h-full flex flex-col bg-[#87838B]">
-      {/* Tab navigation bar */}
-      <div className="px-4 py-2">
-        <Tab.Group>
-          <Tab.List className="flex space-x-2">
-            {["Problem Description", "AI Recommended Problems"].map((tab, index) => (
-              
-              <Tab
-                key={index}
-                className={({ selected }) =>
-                  classNames(
-                    "px-4 py-2 text-sm font-medium rounded-t",
-                    selected
-                      ? "bg-white text-[#5533FF] shadow"
-                      : "text-white hover:bg-gray-500"
-                  )
-                }
-              >
-                {tab}
-              </Tab>
-             
-            ))}
-          </Tab.List>
+  const [activeTab, setActiveTab] = useState(0);
 
-          {/* Tab content area */}
-          <Tab.Panels className="flex-1 overflow-auto">
-            <Tab.Panel>
-              <ProblemDescription />
-            </Tab.Panel>
-            <Tab.Panel>
-              <RecommendedProblems />
-            </Tab.Panel>
-          </Tab.Panels>
-        </Tab.Group>
+  // 2. Add the new tab in the correct order
+  const tabs = ["Problem Description", "Community Solutions", "AI Recommended Problems"];
+
+  return (
+    <div className="h-full flex flex-col bg-[#87838B] font-inter">
+      {/* Header with tab bar */}
+      <div className="h-14 px-4 flex items-center bg-[#48434B]">
+        <div className="flex space-x-2">
+          {tabs.map((tab, index) => (
+            <button
+              key={index}
+              onClick={() => setActiveTab(index)}
+              className={classNames(
+                "px-4 py-2 text-sm font-medium rounded-t transition",
+                activeTab === index
+                  ? "bg-white text-[#5533FF] shadow"
+                  : "text-white hover:bg-gray-500"
+              )}
+            >
+              {tab}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Render content based on selected tab */}
+      <div className="flex-1 overflow-auto p-4">
+        {activeTab === 0 && <ProblemDescription />}
+        {activeTab === 1 && <CommunitySolutions />}
+        {activeTab === 2 && <RecommendedProblems />}
       </div>
     </div>
   );

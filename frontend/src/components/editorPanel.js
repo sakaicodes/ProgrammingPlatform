@@ -34,20 +34,20 @@ export default function EditorPanel() {
   };
 
   return (
-    <div className="h-full flex flex-col bg-white rounded-lg border border-gray-300">
+    <div className="h-full flex flex-col bg-[#48434B] rounded-lg">
       {/* Navbar */}
-      <div className="p-2 flex justify-between items-center border-b border-gray-200 relative">
+      <div className="p-2 flex justify-between items-center relative">
         {/* Left Section with Icons */}
         <div className="flex items-center space-x-4">
-          <VscTerminal className="text-xl text-gray-700" />
-          <label htmlFor="language" className="text-sm font-medium text-gray-700">
+          <VscTerminal className="text-xl text-white" />
+          <label htmlFor="language" className="text-sm font-medium text-white font-inter">
             Language:
           </label>
           <select
             id="language"
             value={language}
             onChange={(e) => setLanguage(e.target.value)}
-            className="border rounded px-2 py-1 text-sm text-gray-700"
+            className="border rounded px-2 py-1 text-sm text-white font-inter"
           >
             <option value="python">Python</option>
             <option value="java">Java</option>
@@ -56,7 +56,7 @@ export default function EditorPanel() {
 
           {/* AI Assistant Switch */}
           <div className="flex items-center space-x-2">
-            <label htmlFor="ai-switch" className="text-sm font-medium text-gray-700">
+            <label htmlFor="ai-switch" className="text-sm font-medium text-white font-inter">
               AI Assistant
             </label>
             <Switch
@@ -80,22 +80,22 @@ export default function EditorPanel() {
           {/* Robot Icon with Tooltip */}
           <VscRobot
             title="AI-powered assistant to help with your programming problems"
-            className={`text-xl text-gray-700 ${isAiEnabled ? "cursor-pointer" : "cursor-not-allowed"}`}
+            className={`text-xl text-white ${isAiEnabled ? "cursor-pointer" : "cursor-not-allowed"}`}
             onClick={isAiEnabled ? handleToggleChat : null} // Only allow click when AI is enabled
           />
           <VscRunAll
             title="Run Code"
-            className="text-xl text-gray-700 cursor-pointer"
+            className="text-xl text-white cursor-pointer"
           />
           <VscDebugRestart
             title="Clear editor"
             onClick={handleRefresh}
-            className="text-xl text-gray-700 cursor-pointer"
+            className="text-xl text-white cursor-pointer"
           />
           <VscSettings
             title="Change editor theme"
             onClick={() => setIsSettingsOpen(!isSettingsOpen)}
-            className="text-xl text-gray-700 cursor-pointer"
+            className="text-xl text-white cursor-pointer"
           />
           {/* Theme Selection Dropdown */}
           {isSettingsOpen && (
@@ -127,6 +127,7 @@ export default function EditorPanel() {
           theme={theme} // Apply the selected theme
           options={{
             fontSize: 14,
+            fontFamily: '"Fira Code", monospace',
             minimap: { enabled: false },
             automaticLayout: true,
           }}

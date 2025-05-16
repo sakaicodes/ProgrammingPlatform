@@ -59,7 +59,7 @@ const problems = [
 
 export default function RecommendedProblems() {
   return (
-    <div className="font-inter p-4 space-y-4 text-white">
+    <div className="relative font-inter p-4 space-y-4 text-white">
       {problems.map((problem, index) => (
         <div
           key={index}
@@ -76,6 +76,7 @@ export default function RecommendedProblems() {
               id={`recommend-tooltip-${index}`}
               place="top"
               className="max-w-xs"
+              positionStrategy="absolute"
             >
               {problem.recommendReason}
             </Tooltip>
@@ -98,6 +99,7 @@ export default function RecommendedProblems() {
               id={`difficulty-tooltip-${index}`}
               place="top"
               className="max-w-xs"
+              positionStrategy="absolute"
             >
               {problem.difficultyReason}
             </Tooltip>

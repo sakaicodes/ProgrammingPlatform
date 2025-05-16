@@ -6,14 +6,14 @@ import "react-chatbot-kit/build/main.css";
 const config = {
   botName: "AI Assistant",
   initialMessages: [
-    createChatBotMessage("Hello! How can I assist you today?"),
+    createChatBotMessage("Hello! How can I assist you with your code today?"),
   ],
   customStyles: {
     botMessageBox: {
       backgroundColor: "#5533FF",
     },
     chatButton: {
-      backgroundColor: "#5C6BC0",
+      backgroundColor: "#5533FF",
     },
   },
 };
@@ -34,13 +34,22 @@ class ActionProvider {
     }));
   }
 
-  // ✅ Response for "help"
+  // Help response with explainability and educational tone
   handleCodeHelp() {
     const explanation = this.createChatBotMessage(
-      `🧠 Here's why your code might not be working:\n\n` +
-      `🔍 *Variable Scope Issue*: You're possibly using a variable before it's defined.\n\n` +
-      `⏳ *Async Timing*: Awaited functions may not be resolved before the next line.\n\n` +
-      `🛠️ Try simplifying the logic and using console logs to trace execution.`
+      `Let's break down the common issues in your Java stocks solution:\n\n` +
+
+      `1. Array Indexing:\n` +
+      `Make sure your loop does not go beyond 'prices.length - 1', as Java arrays are zero-indexed.\n` +
+      `Going out of bounds leads to runtime errors.\n\n` +
+
+      `2. Semicolon Misplacement:\n` +
+      `Avoid putting a semicolon immediately after an 'if' or 'else if' statement, as it terminates the condition prematurely.\n\n` +
+
+      `3. Return Statement:\n` +
+      `Your profit calculation should directly return the maximum profit found without adding extra increments.\n\n` +
+
+      `Understanding these details helps prevent common logical errors and improves your code correctness.`
     );
     this.setState((prev) => ({
       ...prev,
@@ -48,13 +57,18 @@ class ActionProvider {
     }));
   }
 
-  // ✅ Response for "complexity"
+  // Complexity analysis with educational explanation
   handleComplexityAnalysis() {
     const complexity = this.createChatBotMessage(
-      `📊 Here's a complexity analysis of your solution:\n\n` +
-      `🕒 *Time Complexity*: O(n log n) — based on the nested loop with a binary search.\n` +
-      `💾 *Space Complexity*: O(n) — due to extra storage used for the result array.\n\n` +
-      `This is a good balance between performance and memory usage!`
+      `Let's analyze the efficiency of your solution:\n\n` +
+
+      `- Time Complexity: O(n)\n` +
+      `  The solution scans the price list once, keeping track of the minimum price and maximum profit.\n\n` +
+
+      `- Space Complexity: O(1)\n` +
+      `  It uses only a few variables regardless of input size, so it is memory efficient.\n\n` +
+
+      `This makes your solution both fast and memory-friendly, which is ideal for large datasets.`
     );
     this.setState((prev) => ({
       ...prev,
@@ -62,18 +76,43 @@ class ActionProvider {
     }));
   }
 
-  // ✅ Response for "evaluate" or "analyse"
+  // Code evaluation with focus on learning and improvement
   handleCodeEvaluation() {
     const evaluation = this.createChatBotMessage(
-      `🧐 Code Evaluation:\n\n` +
-      `📐 *Structure*: The function is well-scoped but could be modularized further.\n` +
-      `🎨 *Formatting*: Consider consistent indentation and spacing.\n` +
-      `📏 *Conventions*: Use meaningful variable names and avoid magic numbers.\n\n` +
-      `👍 Overall: Readable with minor improvements possible.`
+      `Here is an evaluation of your code:\n\n` +
+
+      `- Logic: The approach of tracking the minimum price and calculating profit is correct and effective.\n\n` +
+
+      `- Syntax: Watch out for small syntax errors like misplaced semicolons, as they can alter the program flow.\n\n` +
+
+      `- Readability: Adding comments and using clear variable names will make your code easier to understand and maintain.\n\n` +
+
+      `Learning to write clear and well-structured code is as important as solving the problem correctly.`
     );
     this.setState((prev) => ({
       ...prev,
       messages: [...prev.messages, evaluation],
+    }));
+  }
+
+  // New: Explain method for simpler, beginner-friendly explanations
+  handleExplain() {
+    const simpleExplanation = this.createChatBotMessage(
+      `Let's explain the stocks problem in simple terms:\n\n` +
+
+      `Imagine you want to buy and sell a stock once to make the most money.\n\n` +
+
+      `The challenge is to find the lowest price to buy and the highest price to sell after that.\n\n` +
+
+      `We look through the list of prices one by one, keeping track of the cheapest price so far and the biggest profit we could make.\n\n` +
+
+      `This way, you can figure out the best day to buy and the best day to sell to earn the most money.\n\n` +
+
+      `Does this help clarify the problem? Feel free to ask more questions!`
+    );
+    this.setState((prev) => ({
+      ...prev,
+      messages: [...prev.messages, simpleExplanation],
     }));
   }
 }
@@ -94,6 +133,8 @@ class MessageParser {
       this.actionProvider.handleComplexityAnalysis();
     } else if (lower.includes("evaluate") || lower.includes("analyse") || lower.includes("analyze")) {
       this.actionProvider.handleCodeEvaluation();
+    } else if (lower.includes("explain")) {
+      this.actionProvider.handleExplain();
     } else {
       this.actionProvider.handleChatBotMessage(message);
     }
