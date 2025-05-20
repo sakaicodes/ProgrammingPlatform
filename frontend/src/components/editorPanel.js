@@ -56,7 +56,9 @@ export default function EditorPanel() {
 
           {/* AI Assistant Switch */}
           <div className="flex items-center space-x-2">
-            <label htmlFor="ai-switch" className="text-sm font-medium text-white font-inter">
+            <label htmlFor="ai-switch" className="text-sm font-medium text-white font-inter"
+            title="AI-powered training in code correctness and structure. Mode: Context-aware assistant. Avg Confidence: 92%."
+            >
               AI Assistant
             </label>
             <Switch
@@ -79,7 +81,7 @@ export default function EditorPanel() {
         <div className="flex items-center space-x-4">
           {/* Robot Icon with Tooltip */}
           <VscRobot
-            title="AI-powered assistant to help with your programming problems"
+            title="Max, your AI-powered virtual assistant for programming help"
             className={`text-xl text-white ${isAiEnabled ? "cursor-pointer" : "cursor-not-allowed"}`}
             onClick={isAiEnabled ? handleToggleChat : null} // Only allow click when AI is enabled
           />

@@ -7,6 +7,7 @@ export default function TerminalPanel() {
     <TooltipProvider>
       <div className="h-full bg-[#1E1E1E] p-4 text-sm text-gray-200 font-mono overflow-y-auto">
         <div className="mt-3 text-gray-400">{">"} Running tests...</div>
+        <div className="mt-3 text-gray-400">{">"} Errors Detected. Hover over failed test for AI reasoning</div>
         <hr className="my-3 border-t border-gray-600" />
 
         {/* Test 1 - Fail */}
