@@ -2,15 +2,15 @@ import { useState } from "react";
 import { VscTerminal, VscDebugRestart, VscSettings, VscRobot, VscRunAll } from "react-icons/vsc";
 import Editor from "@monaco-editor/react";
 import { Switch } from "@headlessui/react";
-import ChatbotComponent from "./chatbot"; 
+import ChatbotComponent from "./chatbot";
 
 export default function EditorPanel() {
   const [language, setLanguage] = useState("python");
   const [editorValue, setEditorValue] = useState("");
   const [isAiEnabled, setIsAiEnabled] = useState(false);
   const [theme, setTheme] = useState("vs-dark");
-  const [isSettingsOpen, setIsSettingsOpen] = useState(false); 
-  const [isChatOpen, setIsChatOpen] = useState(false); 
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isChatOpen, setIsChatOpen] = useState(false);
 
   // Handle editor content change
   const handleEditorChange = (value) => {
@@ -57,29 +57,25 @@ export default function EditorPanel() {
           {/* AI Assistant Switch */}
           <div className="flex items-center space-x-2">
             <label htmlFor="ai-switch" className="text-sm font-medium text-white font-inter"
-            title="AI-powered training in code correctness and structure. Mode: Context-aware assistant. Avg Confidence: 92%."
+              title="AI-powered training in code correctness and structure. Mode: Context-aware assistant. Avg Confidence: 92%."
             >
               AI Assistant
             </label>
             <Switch
               checked={isAiEnabled}
               onChange={setIsAiEnabled}
-              className={`${
-                isAiEnabled ? "bg-[#5533FF]" : "bg-gray-300"
-              } relative inline-flex h-6 w-11 items-center rounded-full`}
+              className={`${isAiEnabled ? "bg-[#5533FF]" : "bg-gray-300"
+                } relative inline-flex h-6 w-11 items-center rounded-full`}
             >
               <span
-                className={`${
-                  isAiEnabled ? "translate-x-6" : "translate-x-1"
-                } inline-block h-4 w-4 transform rounded-full bg-white transition-transform`}
+                className={`${isAiEnabled ? "translate-x-6" : "translate-x-1"
+                  } inline-block h-4 w-4 transform rounded-full bg-white transition-transform`}
               />
             </Switch>
           </div>
         </div>
 
-        {/* Right Section with Icons */}
         <div className="flex items-center space-x-4">
-          {/* Robot Icon with Tooltip */}
           <VscRobot
             title="Max, your AI-powered virtual assistant for programming help"
             className={`text-xl text-white ${isAiEnabled ? "cursor-pointer" : "cursor-not-allowed"}`}
@@ -99,7 +95,6 @@ export default function EditorPanel() {
             onClick={() => setIsSettingsOpen(!isSettingsOpen)}
             className="text-xl text-white cursor-pointer"
           />
-          {/* Theme Selection Dropdown */}
           {isSettingsOpen && (
             <div className="absolute right-0 mt-2 bg-white shadow-lg rounded-lg w-32 border border-gray-200 z-10">
               <div
