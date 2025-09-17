@@ -34,7 +34,7 @@ npm install
 To start the development server and run the application locally:
 
 ```bash
-npm run start
+cd frontend; npm run start
 ```
 
 ## Technologies Used
